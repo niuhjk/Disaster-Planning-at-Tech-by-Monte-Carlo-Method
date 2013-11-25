@@ -1,0 +1,56 @@
+#Set up the FUNCTION 'technum' for 1000 times Monte Carlo method
+technum<-function(r.cty,r.hga,r.lew,r.mon,r.rae,t.cty,t.hga,t.lew,t.mon,t.rae){
+#Generate 1000 random value following triangular distribution
+tri_sim <- rltriangle(1000,10,200,50)
+#number of victims of each hospital
+num.mon <- tri_sim*r.mon
+num.rae <- tri_sim*r.rae
+num.cty <- tri_sim*r.cty
+num.lew <- tri_sim*r.lew
+num.hga <- tri_sim*r.hga
+#time for transpot victims of each hospital
+tim.mon <- num.mon*t.mon
+tim.rae <- num.rae*t.rae
+tim.cty <- num.cty*t.cty
+tim.lew <- num.lew*t.lew
+tim.hga <- num.hga*t.hga
+#total time for transpot victims of each hospital
+tim.sum <- tim.mon + tim.rae + tim.cty + tim.lew + tim.hga
+value1<-mean(num.mon)
+value2<-mean(num.rae)
+value3<-mean(num.cty)
+value4<-mean(num.lew)
+value5<-mean(num.hga)
+value6<-mean(tim.sum)
+value_pair<-matrix()
+value_pair<-c(value1,value2,value3,value4,value5,value6)
+return (value_pair)
+}
+
+technum(0.15,0.2,0.1,0.25,0.3,20,15,20,5,10)
+
+result.a<-list()
+for (i in 1:100){  
+result.a[[i]]=technum(0.15,0.2,0.1,0.25,0.3,20,15,20,5,10)
+}
+ 
+result.a <- data.frame(result.a)
+View(result.a)
+avg.victims.mon<- result.a[1,]
+avg.victims.rae<- result.a[2,]
+avg.victims.lew<- result.a[3,]
+avg.victims.hga<- result.a[4,]
+avg.victims.cty<- result.a[5,]
+avg.ttltime<- result.a[6,]
+avg.victims.mon<- as.numeric(avg.victims.mon)
+avg.victims.rae<- as.numeric(avg.victims.rae)
+avg.victims.lew<- as.numeric(avg.victims.lew)
+avg.victims.hga<- as.numeric(avg.victims.hga)
+avg.victims.cty<- as.numeric(avg.victims.cty)
+avg.ttltime<- as.numeric(avg.ttltime)
+mean(avg.victims.mon)
+mean(avg.victims.rae)
+mean(avg.victims.cty)
+mean(avg.victims.lew)
+mean(avg.victims.hga)
+mean(avg.ttltime)
